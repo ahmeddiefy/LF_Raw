@@ -4,4 +4,4 @@ We have proposed a learning-based LF reconstruction method. To effectively explo
 
 For testing
 Download test data and place them at ./data/TrainingData/Test/{Dataset Folder}
-Run test_and_save.py to get the results mentioned
+Run: test_and_save.py to get the results mentioned
