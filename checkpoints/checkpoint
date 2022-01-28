@@ -1,0 +1,2 @@
+model_checkpoint_path: "LF_epoch_119.ckpt-217440"
+all_model_checkpoint_paths: "LF_epoch_119.ckpt-217440"
