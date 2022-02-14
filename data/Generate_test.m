@@ -58,20 +58,20 @@ for nd = 1:numDatasets
 
 
 
-        s = zeros(h,w,3,3,3);
+        input_LF = zeros(h,w,3,3,3);
 
 
-        s(:,:,:,1,1) = fullLF(:,:,:,1,1);
-        s(:,:,:,1,2) = fullLF(:,:,:,1,4);
-        s(:,:,:,1,3) = fullLF(:,:,:,1,7);
+        input_LF(:,:,:,1,1) = fullLF(:,:,:,1,1);
+        input_LF(:,:,:,1,2) = fullLF(:,:,:,1,4);
+        input_LF(:,:,:,1,3) = fullLF(:,:,:,1,7);
 
-        s(:,:,:,2,1) = fullLF(:,:,:,4,1);
-        s(:,:,:,2,2) = fullLF(:,:,:,4,4);
-        s(:,:,:,2,3) = fullLF(:,:,:,4,7);
+        input_LF(:,:,:,2,1) = fullLF(:,:,:,4,1);
+        input_LF(:,:,:,2,2) = fullLF(:,:,:,4,4);
+        input_LF(:,:,:,2,3) = fullLF(:,:,:,4,7);
 
-        s(:,:,:,3,1) = fullLF(:,:,:,7,1);
-        s(:,:,:,3,2) = fullLF(:,:,:,7,4);
-        s(:,:,:,3,3) = fullLF(:,:,:,7,7);
+        input_LF(:,:,:,3,1) = fullLF(:,:,:,7,1);
+        input_LF(:,:,:,3,2) = fullLF(:,:,:,7,4);
+        input_LF(:,:,:,3,3) = fullLF(:,:,:,7,7);
 
 
         step_img = zeros(h*3, w*3, 3);
@@ -79,7 +79,7 @@ for nd = 1:numDatasets
 
         for ax = 1 : 3
             for ay = 1 : 3
-                step_img(ay:3:end, ax:3:end, :) = s(:, :, :, ay, ax);
+                step_img(ay:3:end, ax:3:end, :) = input_LF(:, :, :, ay, ax);
 
             end
         end
