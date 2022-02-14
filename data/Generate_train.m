@@ -35,54 +35,59 @@ for ns = 1:numScenes
 
 
     
-    img_raw = zeros(h*7, w*7);
+    gt = zeros(h*7, w*7);
 
 
     
     for ax = 1 : 7
         for ay = 1 : 7
-            img_raw(ay:7:end, ax:7:end) = fullLF(:, :, ay, ax);
+            gt(ay:7:end, ax:7:end) = fullLF(:, :, ay, ax);
 
         end
     end
 
-    ss = zeros(h,w,2,2);
+    input_LF = zeros(h,w,3,3,3);
 
-    
-    ss(:,:,1,1) = fullLF(:,:,1,1);
-    ss(:,:,1,2) = fullLF(:,:,1,8);
 
-    
-    ss(:,:,2,1) = fullLF(:,:,8,1);
-    ss(:,:,2,2) = fullLF(:,:,8,8);
+    input_LF(:,:,:,1,1) = fullLF(:,:,:,1,1);
+    input_LF(:,:,:,1,2) = fullLF(:,:,:,1,4);
+    input_LF(:,:,:,1,3) = fullLF(:,:,:,1,7);
+
+    input_LF(:,:,:,2,1) = fullLF(:,:,:,4,1);
+    input_LF(:,:,:,2,2) = fullLF(:,:,:,4,4);
+    input_LF(:,:,:,2,3) = fullLF(:,:,:,4,7);
+
+    input_LF(:,:,:,3,1) = fullLF(:,:,:,7,1);
+    input_LF(:,:,:,3,2) = fullLF(:,:,:,7,4);
+    input_LF(:,:,:,3,3) = fullLF(:,:,:,7,7);
 
    
     
-    step_img = zeros(h*2, w*2);
+    step_img = zeros(h*3, w*3);
 
     
-    for ax = 1 : 2
-        for ay = 1 : 2
-            step_img(ay:2:end, ax:2:end) = ss(:, :, ay, ax);
+    for ax = 1 : 3
+        for ay = 1 : 3
+            step_img(ay:3:end, ax:3:end) = input_LF(:, :, ay, ax);
 
         end
     end
     
-    img_1 = single(imresize(step_img,[h*8, w*8],'nearest'));
+    in = single(imresize(step_img,[h*7, w*7],'nearest'));
 
     
-    img_raw = single(img_raw);
-    [H, W] = size(img_raw);
+    gt = single(gt);
+    [H, W] = size(gt);
 
     
     for ix=1:floor(H/patch_size)
         for iy=1:floor(W/patch_size)
            patch_name = sprintf('./data/train/%d',count);
-           img_raw_patch =  img_raw( (ix-1)*patch_size + 1:ix * patch_size, (iy-1)*patch_size + 1:iy * patch_size);
-           img_1_patch= img_1( (ix-1)*patch_size + 1:ix * patch_size, (iy-1)*patch_size + 1:iy * patch_size);
-           patch = img_raw_patch;
+           gt_patch =  gt( (ix-1)*patch_size + 1:ix * patch_size, (iy-1)*patch_size + 1:iy * patch_size);
+           in_patch= in( (ix-1)*patch_size + 1:ix * patch_size, (iy-1)*patch_size + 1:iy * patch_size);
+           patch = gt_patch;
            save(patch_name, 'patch');
-           patch = img_1_patch;
+           patch = in_patch;
            save(sprintf('%s_1', patch_name), 'patch');
            count = count+1;
         end
