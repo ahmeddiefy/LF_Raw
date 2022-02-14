@@ -104,7 +104,7 @@ def save_img(out,directory):
             cv2.imwrite(save_path , img)
 
 def test_with_sess(epoch, ckpt_path, data_path,sess):
-    saver.restore(sess, tf.train.latest_checkpoint('C:/Ahmed/LF_Raw/checkpoints/'))
+    saver.restore(sess, tf.train.latest_checkpoint('C:/LF_Raw/checkpoints/'))
     if not os.path.exists(save_dir):
         os.makedirs(save_dir) 
     psnr_dict = {}
